@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ADMIN LOGIN</title>
+    <title>ADMIN</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -55,14 +55,14 @@
                             <h3>RESET PASSWORD !</h3>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">EMAIL :</label>
+                            <input type="text" class="form-control" name="otp" id="floatingInput" placeholder="name@example.com">
+                            <label for="floatingInput">ENTER OTP :</label>
                         </div>
                        
                         <div class="d-flex align-items-center justify-content-between mb-4">
                            <u><a href="index">BACK TO LOGIN</a></u>
                         </div>
-                        <button type="submit" name="submit" class="btn btn-primary py-3 w-100 mb-4">SENT OTP</button>
+                        <button type="submit" name="submit" class="btn btn-primary py-3 w-100 mb-4">VERIFY OTP</button>
                     </div>
                 </div>
             </div>

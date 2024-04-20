@@ -66,7 +66,7 @@
                                 <input type="checkbox" class="form-check-input"  name="chk" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
                             </div>
-                            <a href="forgotpass.php">Forgot Password !</a>
+                            <a href="forgotpass">Forgot Password !</a>
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary py-3 w-100 mb-4">Login</button>
                     </div>

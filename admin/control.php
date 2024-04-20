@@ -1,14 +1,22 @@
 <?php
+
 include "model.php";
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+
+ob_start();
+require 'vendor/autoload.php';
+
 class control extends model
 {
     function __construct()
     {
-        error_reporting(0);
+        // error_reporting(0);
         model::__construct();
         session_start();
         $url = $_SERVER['PATH_INFO'];
-
         switch($url)
         {
             case "/index":
@@ -52,11 +60,67 @@ class control extends model
                 include "index.php";
                 break;
 
-            case "/logout":
-                unset( $_SESSION['unm']);
+        
+            case "/forgotpass":
+                if(isset($_REQUEST['submit']))
+                {
+                 //Load Composer's autoloader
+                    
+                    $mail = new PHPMailer(true);
+                    $OTP = rand(1000,9999);
+                    // if (isset($_POST['sendmail'])) {
+                        $mail->isSMTP();                            // Set mailer to use SMTP
+                        $mail->Host = 'smtp.gmail.com';              // Specify main and backup SMTP servers
+                        $mail->SMTPAuth = true;                     // Enable SMTP authentication
+                        $mail->Username   = 'vaibhu584@gmail.com';                     //SMTP username
+                        $mail->Password   = 'cmio ftbo vlpq fzys';  // your password 2step varified 
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;                
+                        $mail->Port = 587;     //587 is used for Outgoing Mail (SMTP) Server.
+                        $mail->setFrom('vaibhu584@gmail.com', 'Name');
+                        $mail->addAddress($_REQUEST['email']);   // Add a recipient
+                        $mail->isHTML(true);  // Set email format to HTML
+                        
+                        $bodyContent = "<h1>HeY!,</h1>: OTP : $OTP";
+                    // 
+                    
+                        $mail->Body    = $bodyContent."<br>";
+                        $mail->Subject = 'Email from Localhost by tops';
+                        if(!$mail->send()) {
+                          echo 'Message was not sent.';
+                          echo 'Mailer error: ' . $mail->ErrorInfo;
+                        } else {
+                          echo 'Message has been sent.';
+                        }
+
+                        $_SESSION['OTP'] = $OTP;
+                        header('location:otp');
+                       
+                    // }
+                }
+                include "forgotpass.php";
                 break;
 
-            
+            case "/logout":
+                    unset( $_SESSION['unm']);
+                    break;
+
+            case "/otp":
+
+                    if(isset($_REQUEST['submit']))
+                    {
+                        if ($_SESSION['OTP'] == $_REQUEST['otp'])
+                         {
+                                    echo "verified";
+                                    unset( $_SESSION['OTP']);
+                        } 
+                        else {
+                            echo "kon h tu";
+                        }
+                    }
+                    include "otp.php";
+                    break;
+                
+                
             case "/home":
                 include "home.php";
                 break;
@@ -97,6 +161,7 @@ class control extends model
                         "c_password"=>$cpass                
                         
                        );
+
 
                    
                         $ins =  $this->insert('users',$data);
